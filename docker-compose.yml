@@ -1,0 +1,30 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/rt24_db
+      - SPRING_DATASOURCE_USERNAME=rory
+      - SPRING_DATASOURCE_PASSWORD=notagoodpassword
+      - SPRING_FLYWAY_ENABLED=true
+      - SPRING_FLYWAY_LOCATIONS=classpath:db/migration
+    depends_on:
+      - postgres-db
+
+  postgres-db:
+    image: postgres:13
+    container_name: rt24
+    environment:
+      POSTGRES_DB: rt24_db
+      POSTGRES_USER: rory
+      POSTGRES_PASSWORD: notagoodpassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

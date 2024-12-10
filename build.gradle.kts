@@ -4,12 +4,12 @@ plugins {
 	id("io.spring.dependency-management") version "1.1.6"
 }
 
-group = "org.example"
+group = "org.rt24"
 version = "0.0.1-SNAPSHOT"
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(23)
+		languageVersion = JavaLanguageVersion.of(21)
 	}
 }
 
@@ -20,9 +20,14 @@ repositories {
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("org.flywaydb:flyway-core")
+	implementation("org.flywaydb:flyway-core:11.0.1")
+	implementation("org.postgresql:postgresql:42.2.13")
 	runtimeOnly("com.h2database:h2")
+	runtimeOnly("org.flywaydb:flyway-database-postgresql:11.0.1")
+	compileOnly("org.projectlombok:lombok:1.18.36")
+	annotationProcessor("org.projectlombok:lombok:1.18.36")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.mockito:mockito-core:4.0.0")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
