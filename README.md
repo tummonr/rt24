@@ -29,4 +29,5 @@ This project involves a Spring Boot application that provides an API for queryin
     - The application will be available at `http://localhost:8080/api/sensor-data/query`.
     - Use the query endpoint to fetch statistics for specific sensors and metrics.
     - I used postman for a simple GET request: ' http://localhost:8080/api/sensor-data/query?sensors=1,2,3&metrics=temperature,humidity&statistic=min&from=2023-10-15T00:00:00&to=2025-10-15T23:59:59 '
-      ![query](https://github.com/user-attachments/assets/c0d07114-fb78-4efa-b314-4b2eac2e6f64)
+      ![query](https://github.com/user-attachments/assets/0be40f19-6072-45bb-8bf6-7f532c7689f7)
+
