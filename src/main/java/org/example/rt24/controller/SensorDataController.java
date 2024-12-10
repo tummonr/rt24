@@ -1,14 +1,12 @@
 package org.example.rt24.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.example.rt24.model.SensorData;
 import org.example.rt24.service.SensorDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -70,7 +68,30 @@ public class SensorDataController {
         }
     }
 
+    @PostMapping("/data")
+    public ResponseEntity<Object> saveSensorData(@RequestBody SensorData sensorData) {
+        if (!isSensorDataPopulated(sensorData)) {
+            return ResponseEntity.badRequest().body("All fields in sensorData must be populated.");
+        }
+        try{
+            sensorDataService.saveSensorData(sensorData);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (Exception e){
+            log.error("An error occurred while processing request: {}", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while processing request");
+        }
+
+    }
+
     private boolean isValidStatistic(String statistic) {
         return List.of("avg", "min", "max", "sum").contains(statistic);
+    }
+    
+    private boolean isSensorDataPopulated(SensorData sensorData) {
+        return sensorData != null 
+                && sensorData.getSensorId() != null 
+                && sensorData.getUnit() != null
+                && sensorData.getFormat() != null
+                && sensorData.getRecord_time() != null;
     }
 }

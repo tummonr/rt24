@@ -1,5 +1,6 @@
 package org.example.rt24.service;
 
+import org.example.rt24.model.SensorData;
 import org.example.rt24.repo.SensorDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,5 +46,8 @@ public class SensorDataService {
         }
 
         return queryResults;
+    }
+    public void saveSensorData(SensorData sensorData) {
+        sensorDataRepository.save(sensorData);
     }
 }
